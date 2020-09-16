@@ -5,7 +5,7 @@ LABEL maintainer="Katerina Oikonomou <koikonomou@iit.demokritos.gr>"
 ARG DEBIAN_FRONTEND=noninteractive
 
 # RUN apt-get update -qq     && apt-get -qq install --no-install-recommends -y apt-utils gnupg wget ca-certificates lsb-release dirmngr
-
+SHELL ["/bin/bash","-c"]
 
 RUN apt-get update && apt-get install -q -y \
     build-essential \
@@ -43,19 +43,25 @@ RUN cd ${ROS_WS} && \
     rm -rf custom_ros_image && \
     wstool init -j8 ${ROS_WS}/src melodic-custom-desktop-full.rosinstall
 
-# USER $USERNAME
+USER $USERNAME
 # Set env var again after changing user name
 
-ENV ROS_WS /opt/ros/melodic
-
-RUN apt-get update && apt-get install --only-upgrade python-catkin-pkg
-
+# ENV ROS_WS /opt/ros/melodic
+RUN apt-get clean && apt-get update
+# RUN apt-get install --reinstall python-catkin-pkg
+# RUN apt-get update && apt-get install --only-upgrade python-catkin-pkg
 # RUN rosdep init && \
 #     rosdep update && \
-RUN rosdep install --from-paths ${ROS_WS}/src --ignore-src --rosdistro melodic -y
+ENV CATKIN_WS=/root/catkin_ws
+RUN mkdir -p $CATKIN_WS/src
+WORKDIR $CATKIN_WS/src
 
+RUN apt-get update && \
+    cd $CATKIN_WS && \
+    rosdep install --from-paths ${ROS_WS}/src --ignore-src --rosdistro melodic -y
 
-# USER root
+RUN rosdep install --from-paths ${ROS_WS}/src --ignore-src --rosdistro melodic -y --skip-keys='python3-opencv dkms opencv libopencv-dev libopencv rviz'  
+ # USER root
 # Build catkin workspace
 # cd into the correct directory first, so that catkin can find relative
 #   directory src/
@@ -68,3 +74,10 @@ RUN cd ${ROS_WS} && \
 # USER $USERNAME
 # WORKDIR /home/$USERNAME
 # EXPOSE 80
+RUN echo "source /ros_entrypoint.sh" >> /root/.bashrc
+
+COPY ./ros_catkin_entrypoint.sh /
+RUN chmod +x /ros_catkin_entrypoint.sh
+
+ENTRYPOINT ["/ros_catkin_entrypoint.sh"]
+CMD ["bash"]
