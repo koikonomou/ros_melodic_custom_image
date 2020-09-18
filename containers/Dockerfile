@@ -2,82 +2,90 @@ FROM ubuntu:18.04
 
 LABEL maintainer="Katerina Oikonomou <koikonomou@iit.demokritos.gr>"
 
+# This avoids keyboard interaction when asked for geographic area
 ARG DEBIAN_FRONTEND=noninteractive
 
-# RUN apt-get update -qq     && apt-get -qq install --no-install-recommends -y apt-utils gnupg wget ca-certificates lsb-release dirmngr
-SHELL ["/bin/bash","-c"]
+RUN apt-get update && \
+    apt-get install -y \
+        build-essential \
+        cmake \
+        cppcheck \
+        gdb \
+        git \
+        libcwiid-dev \
+        libgoogle-glog-dev \
+        libspnav-dev \
+        libusb-dev \
+        lsb-release \
+        mercurial \
+        python-dbg \
+        python-empy \
+        python-numpy \
+        python-pip \
+        software-properties-common \
+        sudo \
+        vim \
+        wget \
+    && apt-get clean
 
-RUN apt-get update && apt-get install -q -y \
-    build-essential \
-    libboost-all-dev \
-    python-pip \
-    python-catkin-pkg \
-    python-rosdep \
-    python-wstool \
-    python-vcstools \
-    git \
-    dirmngr \
-    gnupg2 \
-    wget \
-    python-rosinstall-generator \
-    python-rosinstall \
-    lsb-release \
-    ssh-client && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-RUN for i in 1 2 3; do { apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 'C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654'; } &&  break || sleep 1; done
 
+
+RUN apt-get update \
+ && apt-get install -y \
+        python-rosdep \
+        python-rosinstall-generator \
+        python-wstool \
+        python-vcstools \
+        python-rosinstall \
+        build-essential
+#RUN apt-get install -y python-catkin-tools
+RUN rosdep init
+
+
+# Add a user with the same user_id as the user outside the container
+# Requires a docker build argument `user_id`
+ARG user_id
+ENV USERNAME developer
+RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
+ && echo "$USERNAME:$USERNAME" | chpasswd \
+ && adduser $USERNAME sudo \
+ && echo "$USERNAME ALL=NOPASSWD: ALL" >> /etc/sudoers.d/$USERNAME
+
+# Commands below run as the developer user
+USER $USERNAME
+
+# Make a couple folders for organizing docker volumes
+RUN mkdir ~/workspaces ~/other
+
+# When running a container start in the developer's home folder
+WORKDIR /home/$USERNAME
+
+RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init && \
-    rosdep update 
-# RUN rosdep update
+    rosdep update
+USER root
 
-ENV ROS_WS /opt/ros/melodic
-RUN mkdir -p ${ROS_WS}/src
-
-RUN cd ${ROS_WS} && \
+# Resolve dependencies and install ROS 1 melodic from source
+ENV ROS_WS /opt/ros_ws/melodic
+RUN mkdir -p $ROS_WS/src
+RUN cd $ROS_WS && \
     git clone https://github.com/koikonomou/custom_ros_image && \
     cp -r custom_ros_image/melodic-custom-desktop-full.rosinstall . && \
     rm -rf custom_ros_image && \
-    wstool init -j8 ${ROS_WS}/src melodic-custom-desktop-full.rosinstall
+    wstool init -j8 src melodic-custom-desktop-full.rosinstall
 
-USER $USERNAME
-# Set env var again after changing user name
 
-# ENV ROS_WS /opt/ros/melodic
-RUN apt-get clean && apt-get update
-# RUN apt-get install --reinstall python-catkin-pkg
-# RUN apt-get update && apt-get install --only-upgrade python-catkin-pkg
-# RUN rosdep init && \
-#     rosdep update && \
-ENV CATKIN_WS=/root/catkin_ws
-RUN mkdir -p $CATKIN_WS/src
-WORKDIR $CATKIN_WS/src
+# RUN apt-get install ros-melodic-cmake-modules
+# Already exists
+#RUN apt-get update && apt-get install -y -o Dpkg::Options::="--force-overwrite" python-catkin-pkg python-rosdistro python-rosdep-modules
+# TODO: For some reason it can't find this. But if I go into Ubuntu 20.04 Docker container, I can locate it.
+#RUN apt-get update && apt-get install -y python-catkin-pkg-modules
 
-RUN apt-get update && \
-    cd $CATKIN_WS && \
-    rosdep install --from-paths ${ROS_WS}/src --ignore-src --rosdistro melodic -y
+RUN rosdep install --from-paths $ROS_WS/src --ignore-src --rosdistro melodic -y --skip-keys='gazebo'
 
-RUN rosdep install --from-paths ${ROS_WS}/src --ignore-src --rosdistro melodic -y --skip-keys='python3-opencv dkms opencv libopencv-dev libopencv rviz'  
- # USER root
-# Build catkin workspace
-# cd into the correct directory first, so that catkin can find relative
-#   directory src/
-RUN cd ${ROS_WS} && \
-    ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install
-
-# RUN sed --in-place --expression \
-#     '$isource "~/ros_catkin_ws/install_isolated/setup.bash"' \
-#     /ros_entrypoint.sh
-# USER $USERNAME
-# WORKDIR /home/$USERNAME
-# EXPOSE 80
-RUN echo "source /ros_entrypoint.sh" >> /root/.bashrc
-
-COPY ./ros_catkin_entrypoint.sh /
-RUN chmod +x /ros_catkin_entrypoint.sh
-
-ENTRYPOINT ["/ros_catkin_entrypoint.sh"]
-CMD ["bash"]
+RUN cd $ROS_WS && \
+  ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
