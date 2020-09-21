@@ -23,6 +23,7 @@ RUN apt-get update && \
         python-numpy \
         python-pip \
         python-sip-dev \
+        python-pyqt5 \
         libtinyxml-dev \
         libtinyxml2-dev \
         software-properties-common \
@@ -35,6 +36,8 @@ RUN apt-get update && \
         libqt5widgets5 \
         libpoco-dev \
         libconsole-bridge-dev \
+        qt5-default \
+        libgl1-mesa-dev \
         sudo \
         vim \
         wget \
