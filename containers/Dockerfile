@@ -22,7 +22,19 @@ RUN apt-get update && \
         python-empy \
         python-numpy \
         python-pip \
+        python-sip-dev \
+        libtinyxml-dev \
+        libtinyxml2-dev \
         software-properties-common \
+        libblkid-dev \
+        e2fslibs-dev \
+        libeigen3-dev \
+        libboost-all-dev \
+        libaudit-dev \
+        qtbase5-dev \
+        libqt5widgets5 \
+        libpoco-dev \
+        libconsole-bridge-dev \
         sudo \
         vim \
         wget \
@@ -42,34 +54,29 @@ RUN apt-get update \
         python-vcstools \
         python-rosinstall \
         build-essential
-RUN apt-get install -y python-catkin-tools
-# RUN rosdep init
-
+RUN apt-get install -y python-catkin-tools \
+    python-catkin-pkg-modules \
+    python-catkin-pkg
 
 # Add a user with the same user_id as the user outside the container
 # Requires a docker build argument `user_id`
 ARG user_id
-ENV USERNAME developer
+ENV USERNAME koikonomou
 RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
  && echo "$USERNAME:$USERNAME" | chpasswd \
  && adduser $USERNAME sudo \
  && echo "$USERNAME ALL=NOPASSWD: ALL" >> /etc/sudoers.d/$USERNAME
 
-# Commands below run as the developer user
 USER $USERNAME
 
-# Make a couple folders for organizing docker volumes
-RUN mkdir ~/workspaces ~/other
-
-# When running a container start in the developer's home folder
 WORKDIR /home/$USERNAME
 
 USER root
-RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list
-RUN rosdep init && \
-    rosdep update
+# RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list
+# RUN rosdep init && \
+#     rosdep update
 
-# Resolve dependencies and install ROS 1 melodic from source
+# Resolve dependencies and install ROS melodic from custome rosinstall package
 ENV ROS_WS /opt/ros_ws/melodic
 RUN mkdir -p $ROS_WS/src
 RUN cd $ROS_WS && \
@@ -78,12 +85,12 @@ RUN cd $ROS_WS && \
     rm -rf custom_ros_image && \
     wstool init -j8 src melodic-custom-desktop-full.rosinstall
 
-# Already exists
-#RUN apt-get update && apt-get install -y -o Dpkg::Options::="--force-overwrite" python-catkin-pkg python-rosdistro python-rosdep-modules
-# TODO: For some reason it can't find this. But if I go into Ubuntu 20.04 Docker container, I can locate it.
-#RUN apt-get update && apt-get install -y python-catkin-pkg-modules
-
-RUN rosdep install --from-paths $ROS_WS/src --ignore-src --rosdistro melodic -y --skip-keys='gazebo'
+# RUN rosdep install --from-paths $ROS_WS/src --ignore-src --rosdistro melodic -y --skip-keys='gazebo'
 
 RUN cd $ROS_WS && \
     ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
+
+# RUN echo "#!/bin/bash" | tee /ros_entrypoint.sh;\
+#     echo "set -e" >> /ros_entrypoint.sh
+
+RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
