@@ -42,8 +42,8 @@ RUN apt-get update \
         python-vcstools \
         python-rosinstall \
         build-essential
-#RUN apt-get install -y python-catkin-tools
-RUN rosdep init
+RUN apt-get install -y python-catkin-tools
+# RUN rosdep init
 
 
 # Add a user with the same user_id as the user outside the container
@@ -64,10 +64,10 @@ RUN mkdir ~/workspaces ~/other
 # When running a container start in the developer's home folder
 WORKDIR /home/$USERNAME
 
+USER root
 RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init && \
     rosdep update
-USER root
 
 # Resolve dependencies and install ROS 1 melodic from source
 ENV ROS_WS /opt/ros_ws/melodic
@@ -78,8 +78,6 @@ RUN cd $ROS_WS && \
     rm -rf custom_ros_image && \
     wstool init -j8 src melodic-custom-desktop-full.rosinstall
 
-
-# RUN apt-get install ros-melodic-cmake-modules
 # Already exists
 #RUN apt-get update && apt-get install -y -o Dpkg::Options::="--force-overwrite" python-catkin-pkg python-rosdistro python-rosdep-modules
 # TODO: For some reason it can't find this. But if I go into Ubuntu 20.04 Docker container, I can locate it.
@@ -88,4 +86,4 @@ RUN cd $ROS_WS && \
 RUN rosdep install --from-paths $ROS_WS/src --ignore-src --rosdistro melodic -y --skip-keys='gazebo'
 
 RUN cd $ROS_WS && \
-  ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
+    ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
