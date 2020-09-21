@@ -24,6 +24,7 @@ RUN apt-get update && \
         python-pip \
         python-sip-dev \
         python-pyqt5 \
+        python-nose \
         libtinyxml-dev \
         libtinyxml2-dev \
         software-properties-common \
@@ -38,6 +39,7 @@ RUN apt-get update && \
         libconsole-bridge-dev \
         qt5-default \
         libgl1-mesa-dev \
+        qt-at-spi \
         sudo \
         vim \
         wget \
