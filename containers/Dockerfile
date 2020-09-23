@@ -25,9 +25,15 @@ RUN apt-get update && \
         python-sip-dev \
         python-pyqt5 \
         python-nose \
+        sip-dev \
+        pyqt5-dev \
+        pyqt5-dev-tools \
         libtinyxml-dev \
         libtinyxml2-dev \
         software-properties-common \
+        curl \
+        libcurl4-openssl-dev \
+        libtf-conversions-dev \
         libblkid-dev \
         e2fslibs-dev \
         libeigen3-dev \
@@ -35,11 +41,17 @@ RUN apt-get update && \
         libaudit-dev \
         qtbase5-dev \
         libqt5widgets5 \
+        libresource-retriever-dev \
         libpoco-dev \
+        libgtest-dev \
         libconsole-bridge-dev \
         qt5-default \
         libgl1-mesa-dev \
         qt-at-spi \
+        liblz4-dev \
+        libbond-dev \
+        libbondcpp-dev \
+        libjpeg-dev \
         sudo \
         vim \
         wget \
@@ -66,7 +78,7 @@ RUN apt-get install -y python-catkin-tools \
 # Add a user with the same user_id as the user outside the container
 # Requires a docker build argument `user_id`
 ARG user_id
-ENV USERNAME koikonomou
+ENV USERNAME kate
 RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
  && echo "$USERNAME:$USERNAME" | chpasswd \
  && adduser $USERNAME sudo \
