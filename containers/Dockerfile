@@ -47,11 +47,26 @@ RUN apt-get update && \
         libconsole-bridge-dev \
         qt5-default \
         libgl1-mesa-dev \
+        liburdfdom-headers-dev \
+        liburdfdom-dev \
+        liburdfdom-tools \
+        liburdf-parser-plugin-dev \
         qt-at-spi \
         liblz4-dev \
         libbond-dev \
         libbondcpp-dev \
         libjpeg-dev \
+        libsmc-dev \
+        libpng-dev \
+        libzip-dev \
+        libfltk1.1-dev \
+        libbz2-dev \
+        libgpgme-dev \
+        libkdl-parser-dev \
+        libopencv-dev \
+        libyaml-cpp0.3-dev \
+        libpcl-dev \
+        libgtk2.0-dev \
         sudo \
         vim \
         wget \
