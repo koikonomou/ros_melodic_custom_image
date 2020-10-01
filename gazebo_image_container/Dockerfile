@@ -88,6 +88,8 @@ RUN apt-get update \
         python-wstool \
         python-vcstools \
         python-rosinstall \
+        python-defusedxml \
+        python-netifaces \
         build-essential 
 
 
@@ -103,12 +105,12 @@ RUN sudo apt-get install -y ccache python3-colcon-common-extensions
 
 # Add a user with the same user_id as the user outside the container
 # Requires a docker build argument `user_id`
-ARG user_id
-ENV USERNAME kate
-RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
- && echo "$USERNAME:$USERNAME" | chpasswd \
- && adduser $USERNAME sudo \
- && echo "$USERNAME ALL=NOPASSWD: ALL" >> /etc/sudoers.d/$USERNAME
+# ARG user
+ENV USERNAME user
+# RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
+#  && echo "$USERNAME:$USERNAME" | chpasswd \
+#  && adduser $USERNAME sudo \
+#  && echo "$USERNAME ALL=NOPASSWD: ALL" >> /etc/sudoers.d/$USERNAME
 
 USER $USERNAME
 
