@@ -74,7 +74,6 @@ RUN apt-get update && \
 
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 RUN sudo /bin/sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' \
  && sudo /bin/sh -c 'wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -' \
  && sudo /bin/sh -c 'apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' 
@@ -103,40 +102,23 @@ RUN sudo apt-get install -y pkg-config
 RUN sudo apt-get install -y libdart6-dev
 RUN sudo apt-get install -y ccache python3-colcon-common-extensions
 
-# Add a user with the same user_id as the user outside the container
-# Requires a docker build argument `user_id`
-# ARG user
-ENV USERNAME user
-# RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
-#  && echo "$USERNAME:$USERNAME" | chpasswd \
-#  && adduser $USERNAME sudo \
-#  && echo "$USERNAME ALL=NOPASSWD: ALL" >> /etc/sudoers.d/$USERNAME
-
-USER $USERNAME
-
-WORKDIR /home/$USERNAME
-
-USER root
-RUN mkdir -p /home/$USERNAME/.gazebo && git clone https://github.com/osrf/gazebo_models /home/$USERNAME/.gazebo/models
+# USER root
+# RUN mkdir -p /home/$USERNAME/.gazebo && git clone https://github.com/osrf/gazebo_models /home/$USERNAME/.gazebo/models
 RUN apt-get update && apt-get install -y \
         gazebo9 \
         libgazebo9-dev 
 
 RUN sudo apt-get update && sudo apt-get install -y \
     libzmq3-dev protobuf-compiler
-    #libzmq-dev libzmq5 libzmq3-dev protobuf-compiler
 
 
 ENV ROS_WS /opt/ros_ws/melodic
 RUN mkdir -p $ROS_WS/src
-RUN cd $ROS_WS && \
-    git clone https://github.com/koikonomou/custom_ros_image && \
-    cp -r custom_ros_image/gazebo.rosinstall . && \
-    rm -rf custom_ros_image && \
-    wstool init -j8 src gazebo.rosinstall
-# Clone all the gazebo models so that you don't download them every time
-# docker is run
 
+COPY gazebo.rosinstall /opt/ros_ws/melodic/
+
+RUN cd $ROS_WS && \
+    wstool init -j8 src gazebo.rosinstall
 
 RUN cd $ROS_WS && \
     ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
