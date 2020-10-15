@@ -35,16 +35,9 @@ LABEL maintainer="Katerina Oikonomou <koikonomou@iit.demokritos.gr>"
 #     ros-melodic-effort-controllers \
 #     ros-melodic-joint-state-controller \
 #     ros-melodic-controller-manager \
-#     ros-melodic-ackermann-steering-controller && \
-#     rm -rf /var/lib/apt-get/lists/*
+#     ros-melodic-ackermann-steering-controller
 
 RUN mkdir -p /opt/catkin_ws/src
-
-RUN cd /opt/catkin_ws/src && \
-    git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins && \
-    cd .. && \
-    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; catkin_make_isolated -DCATKIN_WHITELIST_PACKAGES=\"roboticsgroup_gazebo_plugins\"" 
-
 
 RUN cd /opt/catkin_ws/src && \
     git clone https://github.com/roboskel/roboskel_msgs && \
@@ -58,11 +51,18 @@ RUN cd /opt/catkin_ws/src && \
     git clone https://github.com/ros-planning/navigation -b 1.16.7 && \
     git clone https://github.com/OctoMap/octomap_mapping -b 0.6.5 && \
     # git clone https://github.com/osrf/gazebo_models && \
+    git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins && \
+    # cd .. && \
     mkdir -p ~/.gazebo/models && \
     cp -r roboskel_ros_resources/gazebo/models/* ~/.gazebo/models && \
     rm -rf roboskel_ros_resources/graspit && \
     cd .. && \
-    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make_isolated "
+    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; catkin_make -DCATKIN_WHITELIST_PACKAGES=roboticsgroup_gazebo_plugins"
+    # /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make_isolated "
+
+RUN cd /opt/catkin_ws && \
+    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make "
+
 
 COPY ros_entrypoint.sh /usr/local/bin/ros_entrypoint.sh
 
