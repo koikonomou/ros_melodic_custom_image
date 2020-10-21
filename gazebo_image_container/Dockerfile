@@ -64,7 +64,8 @@ RUN apt-get update && \
         libgpgme-dev \
         libkdl-parser-dev \
         libopencv-dev \
-        libyaml-cpp0.3-dev \
+        libyaml-cpp-dev \
+        libyaml-cpp0.5v5 \
         libpcl-dev \
         libgtk2.0-dev \
         sudo \
@@ -102,14 +103,22 @@ RUN sudo apt-get install -y pkg-config
 RUN sudo apt-get install -y libdart6-dev
 RUN sudo apt-get install -y ccache python3-colcon-common-extensions
 
+RUN sudo apt-get update && sudo apt-get install -y \
+    libzmq3-dev protobuf-compiler protobuf-c-compiler
+
+# RUN sudo apt install ros-melodic-gazebo-ros \
+#     ros-melodic-gazebo-dev \
+#     ros-melodic-gazebo-plugins \
+#     ros-melodic-gazebo-msgs \
+#     ros-melodic-gazebo-ros-pkgs 
+
 # USER root
-# RUN mkdir -p /home/$USERNAME/.gazebo && git clone https://github.com/osrf/gazebo_models /home/$USERNAME/.gazebo/models
+RUN mkdir -p /home/.gazebo && git clone https://github.com/osrf/gazebo_models /home/.gazebo/models
 RUN apt-get update && apt-get install -y \
         gazebo9 \
+        gazebo9-common \
         libgazebo9-dev 
 
-RUN sudo apt-get update && sudo apt-get install -y \
-    libzmq3-dev protobuf-compiler
 
 
 ENV ROS_WS /opt/ros_ws/melodic
@@ -127,5 +136,4 @@ RUN mkdir ~/ros_ws && \
     rosws init . /opt/ros_ws/melodic/install_isolated
 
 
-RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
 RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
