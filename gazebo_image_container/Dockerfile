@@ -121,7 +121,11 @@ RUN cd $ROS_WS && \
     wstool init -j8 src gazebo.rosinstall
 
 RUN cd $ROS_WS && \
-    ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
+    ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
+RUN mkdir ~/ros_ws && \
+    cd ~/ros_ws && \
+    rosws init . /opt/ros_ws/melodic/install_isolated
 
 
+RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
 RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
