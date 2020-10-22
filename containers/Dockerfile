@@ -112,4 +112,7 @@ RUN cd /opt/ros_ws/melodic && \
 # RUN cd $ROS_WS && \
 #     ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
 
-RUN /bin/bash -c ". /opt/ros_ws/melodic/devel/setup.bash "
+# RUN echo "#!/bin/bash" | tee /ros_entrypoint.sh;\
+#     echo "set -e" >> /ros_entrypoint.sh
+
+# RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
