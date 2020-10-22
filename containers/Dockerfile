@@ -68,13 +68,13 @@ RUN apt-get update && \
         libpcl-dev \
         libgtk2.0-dev \
         sudo \
-        vim \
+        xsltproc \
         wget \
     && apt-get clean
 
 
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
+    sudo /bin/sh -c 'apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' 
 
 
 
@@ -85,44 +85,31 @@ RUN apt-get update \
         python-wstool \
         python-vcstools \
         python-rosinstall \
-        build-essential
+        python-defusedxml \
+        python-netifaces \
+        build-essential 
+
+
 RUN apt-get install -y python-catkin-tools \
     python-catkin-pkg-modules \
     python-catkin-pkg
 
-# Add a user with the same user_id as the user outside the container
-# Requires a docker build argument `user_id`
-ARG user_id
-ENV USERNAME kate
-RUN useradd -U --uid ${user_id} -ms /bin/bash $USERNAME \
- && echo "$USERNAME:$USERNAME" | chpasswd \
- && adduser $USERNAME sudo \
- && echo "$USERNAME ALL=NOPASSWD: ALL" >> /etc/sudoers.d/$USERNAME
 
-USER $USERNAME
 
-WORKDIR /home/$USERNAME
-
-USER root
-# RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list
-# RUN rosdep init && \
-#     rosdep update
-
-# Resolve dependencies and install ROS melodic from custome rosinstall package
 ENV ROS_WS /opt/ros_ws/melodic
 RUN mkdir -p $ROS_WS/src
-RUN cd $ROS_WS && \
-    git clone https://github.com/koikonomou/custom_ros_image && \
-    cp -r custom_ros_image/melodic-custom-desktop-full.rosinstall . && \
-    rm -rf custom_ros_image && \
-    wstool init -j8 src melodic-custom-desktop-full.rosinstall
 
-# RUN rosdep install --from-paths $ROS_WS/src --ignore-src --rosdistro melodic -y --skip-keys='gazebo'
+# Resolve dependencies and install ROS melodic from custome rosinstall package
+COPY melodic-custom-desktop-full.rosinstall /opt/ros_ws/melodic/src/.rosinstall
 
-RUN cd $ROS_WS && \
-    ${ROS_WS}/src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
+RUN cd /opt/ros_ws/melodic/src && \
+    wstool update && \
+    cd ../ && \
+    catkin init
 
-# RUN echo "#!/bin/bash" | tee /ros_entrypoint.sh;\
-#     echo "set -e" >> /ros_entrypoint.sh
+RUN cd /opt/ros_ws/melodic && \
+    catkin build && ls build && ls devel
+# RUN cd $ROS_WS && \
+#     ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
 
-RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
+RUN /bin/bash -c ". /opt/ros_ws/melodic/devel/setup.bash "
