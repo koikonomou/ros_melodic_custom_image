@@ -55,26 +55,54 @@
     uri: https://github.com/cra-ros-pkg/robot_localization-release/archive/release/melodic/robot_localization/2.6.7-1.tar.gz
     version: robot_localization-release-release-melodic-robot_localization-2.6.7-1
 - tar:
-    local-name: gazebo_ros_pkgs/gazebo_dev
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_dev/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_dev-2.8.7-1
+    local-name: ros_controllers/ros_controllers
+    uri: https://github.com/ros-gbp/ros_controllers-release/archive/release/melodic/ros_controllers/0.17.0-1.tar.gz
+    version: ros_controllers-release-release-melodic-ros_controllers-0.17.0-1
 - tar:
-    local-name: gazebo_ros_pkgs/gazebo_msgs
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_msgs/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_msgs-2.8.7-1
+    local-name: ros_control/ros_control
+    uri: https://github.com/ros-gbp/ros_control-release/archive/release/melodic/ros_control/0.18.2-1.tar.gz
+    version: ros_control-release-release-melodic-ros_control-0.18.2-1
 - tar:
-    local-name: gazebo_ros_pkgs/gazebo_plugins
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_plugins/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_plugins-2.8.7-1
+    local-name: urdf_geometry_parser
+    uri: https://github.com/ros-gbp/urdf_geometry_parser-release/archive/release/melodic/urdf_geometry_parser/0.1.0-1.tar.gz
+    version: urdf_geometry_parser-release-release-melodic-urdf_geometry_parser-0.1.0-1
 - tar:
-    local-name: gazebo_ros_pkgs/gazebo_ros
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_ros/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_ros-2.8.7-1
+    local-name: perception_pcl/perception_pcl
+    uri: https://github.com/ros-gbp/perception_pcl-release/archive/release/melodic/perception_pcl/1.7.1-1.tar.gz
+    version: perception_pcl-release-release-melodic-perception_pcl-1.7.1-1
 - tar:
-    local-name: gazebo_ros_pkgs/gazebo_ros_control
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_ros_control/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_ros_control-2.8.7-1
+    local-name: pcl_msgs
+    uri: https://github.com/ros-gbp/pcl_msgs-release/archive/release/melodic/pcl_msgs/0.2.0-0.tar.gz
+    version: pcl_msgs-release-release-melodic-pcl_msgs-0.2.0-0
 - tar:
-    local-name: gazebo_ros_pkgs/gazebo_ros_pkgs
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_ros_pkgs/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_ros_pkgs-2.8.7-1
+    local-name: four_wheel_steering_msgs
+    uri: https://github.com/ros-drivers-gbp/four_wheel_steering_msgs-release/archive/release/melodic/four_wheel_steering_msgs/1.1.0-1.tar.gz
+    version: four_wheel_steering_msgs-release-release-melodic-four_wheel_steering_msgs-1.1.0-1
+- tar:
+    local-name: navigation/navigation
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/navigation/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-navigation-1.16.7-1
+- tar:
+    local-name: octomap/octomap
+    uri: https://github.com/ros-gbp/octomap-release/archive/release/melodic/octomap/1.9.0-1.tar.gz
+    version: octomap-release-release-melodic-octomap-1.9.0-1
+- tar:
+    local-name: octomap_ros
+    uri: https://github.com/ros-gbp/octomap_ros-release/archive/release/melodic/octomap_ros/0.4.1-1.tar.gz
+    version: octomap_ros-release-release-melodic-octomap_ros-0.4.1-1
+- tar:
+    local-name: octomap_msgs
+    uri: https://github.com/ros-gbp/octomap_msgs-release/archive/release/melodic/octomap_msgs/0.3.5-1.tar.gz
+    version: octomap_msgs-release-release-melodic-octomap_msgs-0.3.5-1
+- tar:
+    local-name: rosbridge_suite/rosbridge_suite
+    uri: https://github.com/RobotWebTools-release/rosbridge_suite-release/archive/release/melodic/rosbridge_suite/0.11.10-1.tar.gz
+    version: rosbridge_suite-release-release-melodic-rosbridge_suite-0.11.10-1
+- tar:
+    local-name: tf2_web_republisher
+    uri: https://github.com/RobotWebTools-release/tf2_web_republisher-release/archive/release/melodic/tf2_web_republisher/0.3.2-0.tar.gz
+    version: tf2_web_republisher-release-release-melodic-tf2_web_republisher-0.3.2-0
+- tar:
+    local-name: ros_controllers/ackermann_steering_controller
+    uri: https://github.com/ros-gbp/ros_controllers-release/archive/release/melodic/ackermann_steering_controller/0.17.0-1.tar.gz
+    version: ros_controllers-release-release-melodic-ackermann_steering_controller-0.17.0-1
