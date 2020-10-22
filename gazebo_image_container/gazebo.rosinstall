@@ -746,3 +746,163 @@
     local-name: unique_identifier/uuid_msgs
     uri: https://github.com/ros-geographic-info/unique_identifier-release/archive/release/melodic/uuid_msgs/1.0.6-0.tar.gz
     version: unique_identifier-release-release-melodic-uuid_msgs-1.0.6-0
+- tar:
+    local-name: perception_pcl/pcl_ros
+    uri: https://github.com/ros-gbp/perception_pcl-release/archive/release/melodic/pcl_ros/1.7.1-1.tar.gz
+    version: perception_pcl-release-release-melodic-pcl_ros-1.7.1-1
+- tar:
+    local-name: perception_pcl/pcl_conversions
+    uri: https://github.com/ros-gbp/perception_pcl-release/archive/release/melodic/pcl_conversions/1.7.1-1.tar.gz
+    version: perception_pcl-release-release-melodic-pcl_conversions-1.7.1-1
+- tar:
+    local-name: pcl_msgs
+    uri: https://github.com/ros-gbp/pcl_msgs-release/archive/release/melodic/pcl_msgs/0.2.0-0.tar.gz
+    version: pcl_msgs-release-release-melodic-pcl_msgs-0.2.0-0
+- tar:
+    local-name: octomap_mapping/octomap_server
+    uri: https://github.com/ros-gbp/octomap_mapping-release/archive/release/melodic/octomap_server/0.6.5-1.tar.gz
+    version: octomap_mapping-release-release-melodic-octomap_server-0.6.5-1
+- tar:
+    local-name: octomap/octomap
+    uri: https://github.com/ros-gbp/octomap-release/archive/release/melodic/octomap/1.9.0-1.tar.gz
+    version: octomap-release-release-melodic-octomap-1.9.0-1
+- tar:
+    local-name: octomap_msgs
+    uri: https://github.com/ros-gbp/octomap_msgs-release/archive/release/melodic/octomap_msgs/0.3.5-1.tar.gz
+    version: octomap_msgs-release-release-melodic-octomap_msgs-0.3.5-1
+- tar:
+    local-name: octomap_ros
+    uri: https://github.com/ros-gbp/octomap_ros-release/archive/release/melodic/octomap_ros/0.4.1-1.tar.gz
+    version: octomap_ros-release-release-melodic-octomap_ros-0.4.1-1
+- tar:
+    local-name: navigation/move_base
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/move_base/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-move_base-1.16.7-1
+- tar:
+    local-name: rtabmap_ros
+    uri: https://github.com/introlab/rtabmap_ros-release/archive/release/melodic/rtabmap_ros/0.20.0-1.tar.gz
+    version: rtabmap_ros-release-release-melodic-rtabmap_ros-0.20.0-1
+- tar:
+    local-name: navigation/base_local_planner
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/base_local_planner/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-base_local_planner-1.16.7-1
+- tar:
+    local-name: octomap_mapping/octomap_server
+    uri: https://github.com/ros-gbp/octomap_mapping-release/archive/release/melodic/octomap_server/0.6.5-1.tar.gz
+    version: octomap_mapping-release-release-melodic-octomap_server-0.6.5-1
+- tar:
+    local-name: rtabmap_ros
+    uri: https://github.com/introlab/rtabmap_ros-release/archive/release/melodic/rtabmap_ros/0.20.0-1.tar.gz
+    version: rtabmap_ros-release-release-melodic-rtabmap_ros-0.20.0-1
+- tar:
+    local-name: robot_localization
+    uri: https://github.com/cra-ros-pkg/robot_localization-release/archive/release/melodic/robot_localization/2.6.7-1.tar.gz
+    version: robot_localization-release-release-melodic-robot_localization-2.6.7-1
+- tar:
+    local-name: ros_controllers/ros_controllers
+    uri: https://github.com/ros-gbp/ros_controllers-release/archive/release/melodic/ros_controllers/0.17.0-1.tar.gz
+    version: ros_controllers-release-release-melodic-ros_controllers-0.17.0-1
+- tar:
+    local-name: ros_control/ros_control
+    uri: https://github.com/ros-gbp/ros_control-release/archive/release/melodic/ros_control/0.18.2-1.tar.gz
+    version: ros_control-release-release-melodic-ros_control-0.18.2-1
+- tar:
+    local-name: urdf_geometry_parser
+    uri: https://github.com/ros-gbp/urdf_geometry_parser-release/archive/release/melodic/urdf_geometry_parser/0.1.0-1.tar.gz
+    version: urdf_geometry_parser-release-release-melodic-urdf_geometry_parser-0.1.0-1
+- tar:
+    local-name: perception_pcl/perception_pcl
+    uri: https://github.com/ros-gbp/perception_pcl-release/archive/release/melodic/perception_pcl/1.7.1-1.tar.gz
+    version: perception_pcl-release-release-melodic-perception_pcl-1.7.1-1
+- tar:
+    local-name: pcl_msgs
+    uri: https://github.com/ros-gbp/pcl_msgs-release/archive/release/melodic/pcl_msgs/0.2.0-0.tar.gz
+    version: pcl_msgs-release-release-melodic-pcl_msgs-0.2.0-0
+- tar:
+    local-name: four_wheel_steering_msgs
+    uri: https://github.com/ros-drivers-gbp/four_wheel_steering_msgs-release/archive/release/melodic/four_wheel_steering_msgs/1.1.0-1.tar.gz
+    version: four_wheel_steering_msgs-release-release-melodic-four_wheel_steering_msgs-1.1.0-1
+- tar:
+    local-name: navigation/navigation
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/navigation/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-navigation-1.16.7-1
+- tar:
+    local-name: octomap/octomap
+    uri: https://github.com/ros-gbp/octomap-release/archive/release/melodic/octomap/1.9.0-1.tar.gz
+    version: octomap-release-release-melodic-octomap-1.9.0-1
+- tar:
+    local-name: octomap_ros
+    uri: https://github.com/ros-gbp/octomap_ros-release/archive/release/melodic/octomap_ros/0.4.1-1.tar.gz
+    version: octomap_ros-release-release-melodic-octomap_ros-0.4.1-1
+- tar:
+    local-name: octomap_msgs
+    uri: https://github.com/ros-gbp/octomap_msgs-release/archive/release/melodic/octomap_msgs/0.3.5-1.tar.gz
+    version: octomap_msgs-release-release-melodic-octomap_msgs-0.3.5-1
+- tar:
+    local-name: rosbridge_suite/rosbridge_suite
+    uri: https://github.com/RobotWebTools-release/rosbridge_suite-release/archive/release/melodic/rosbridge_suite/0.11.10-1.tar.gz
+    version: rosbridge_suite-release-release-melodic-rosbridge_suite-0.11.10-1
+- tar:
+    local-name: tf2_web_republisher
+    uri: https://github.com/RobotWebTools-release/tf2_web_republisher-release/archive/release/melodic/tf2_web_republisher/0.3.2-0.tar.gz
+    version: tf2_web_republisher-release-release-melodic-tf2_web_republisher-0.3.2-0
+- tar:
+    local-name: ros_controllers/ackermann_steering_controller
+    uri: https://github.com/ros-gbp/ros_controllers-release/archive/release/melodic/ackermann_steering_controller/0.17.0-1.tar.gz
+    version: ros_controllers-release-release-melodic-ackermann_steering_controller-0.17.0-1
+- tar:
+    local-name: navigation/costmap_2d
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/costmap_2d/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-costmap_2d-1.16.7-1
+- tar:
+    local-name: geometry2/tf2_sensor_msgs
+    uri: https://github.com/ros-gbp/geometry2-release/archive/release/melodic/tf2_sensor_msgs/0.6.5-0.tar.gz
+    version: geometry2-release-release-melodic-tf2_sensor_msgs-0.6.5-0
+- tar:
+    local-name: navigation/voxel_grid
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/voxel_grid/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-voxel_grid-1.16.7-1
+- tar:
+    local-name: navigation/amcl
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/amcl/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-amcl-1.16.7-1
+- tar:
+    local-name: navigation/carrot_planner
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/carrot_planner/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-carrot_planner-1.16.7-1
+- tar:
+    local-name: navigation/clear_costmap_recovery
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/clear_costmap_recovery/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-clear_costmap_recovery-1.16.7-1
+- tar:  
+    local-name: navigation/dwa_local_planner
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/dwa_local_planner/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-dwa_local_planner-1.16.7-1
+- tar:
+    local-name: navigation/fake_localization
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/fake_localization/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-fake_localization-1.16.7-1
+- tar:
+    local-name: navigation/global_planner
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/global_planner/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-global_planner-1.16.7-1
+- tar:
+    local-name: navigation/map_server
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/map_server/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-map_server-1.16.7-1
+- tar:
+    local-name: navigation/move_slow_and_clear
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/move_slow_and_clear/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-move_slow_and_clear-1.16.7-1
+- tar:
+    local-name: navigation/nav_core
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/nav_core/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-nav_core-1.16.7-1
+- tar: 
+    local-name: navigation/navigation
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/navigation/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-navigation-1.16.7-1
+- tar:
+    local-name: navigation/rotate_recovery
+    uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/rotate_recovery/1.16.7-1.tar.gz
+    version: navigation-release-release-melodic-rotate_recovery-1.16.7-1
