@@ -102,6 +102,8 @@ RUN sudo apt-get install -y libccd-dev libbullet-dev
 RUN sudo apt-get install -y pkg-config
 RUN sudo apt-get install -y libdart6-dev
 RUN sudo apt-get install -y ccache python3-colcon-common-extensions
+RUN sudo apt-get install -y libsdl-image1.2-dev
+RUN sudo apt-get install libsdl-dev
 
 RUN sudo apt-get update && sudo apt-get install -y \
     libzmq3-dev protobuf-compiler protobuf-c-compiler
@@ -123,7 +125,32 @@ RUN apt-get update && apt-get install -y \
 
 ENV ROS_WS /opt/ros_ws/melodic
 RUN mkdir -p $ROS_WS/src
+# Install PCL
+# RUN cd /opt && git clone https://github.com/Airsquire/pcl pcl
+# RUN cd /opt/pcl && git checkout master
+# RUN mkdir -p /opt/pcl/build
+# RUN cd /opt/pcl/build && cmake -D BUILD_visualization=true -D VTK_DIR=/opt/VTK/build -D BUILD_2d=true -D BUILD_tools=false ..
+# RUN cd /opt/pcl/build && make -j 32 && make install
+# RUN cd /opt/pcl/build && make clean
 
+# RUN apt-get update -y --fix-missing && apt-get install -y libvtk7-dev libvtk7-java libvtk7-jni
+# RUN apt-get update -y --fix-missing && apt-get install -y libgdal-* libgeotiff-dev
+# RUN apt-get update -y --fix-missing && apt-get install -y libeigen3-dev libflann-dev
+# RUN apt-get update -y --fix-missing && apt-get install -y libboost-all-dev 
+# RUN apt-get install -y libvtk6-dev libvtk6-qt-dev libvtk6-java libvtk6-jni
+# RUN apt-get install -y git build-essential cmake gdb 
+# RUN apt-get install -y liblas-dev liblas-bin liblas-c-dev liblas3
+# RUN sudo apt-get install -y libpcl-*
+# RUN apt-get install -y ros-pcl-msgs
+
+# RUN git clone https://github.com/PDAL/PDAL.git --branch 1.8.0 /root/pdal
+# RUN cd /root/pdal && mkdir build && cd build && cmake ../ && make -j 16 && make install && cd /
+
+# RUN git clone https://github.com/PointCloudLibrary/pcl -b pcl-1.9.1 /root/pcl
+# RUN cd /root/pcl && mkdir build && cd build && cmake ../ -DBUILD_CUDA=ON -DBUILD_GPU=ON && make -j 16 && make install && cd /
+
+# RUN git clone git://github.com/libLAS/libLAS.git --branch 1.8.1 /root/libLAS
+# RUN cd /root/libLAS && mkdir build && cd build && cmake ../ && make -j 16 && make install && cd /
 COPY gazebo.rosinstall /opt/ros_ws/melodic/
 
 RUN cd $ROS_WS && \
@@ -137,3 +164,5 @@ RUN mkdir ~/ros_ws && \
 
 
 RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash "
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
