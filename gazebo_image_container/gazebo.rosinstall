@@ -791,18 +791,6 @@
     uri: https://github.com/ros-gbp/navigation-release/archive/release/melodic/navigation/1.16.7-1.tar.gz
     version: navigation-release-release-melodic-navigation-1.16.7-1
 - tar:
-    local-name: octomap/octomap
-    uri: https://github.com/ros-gbp/octomap-release/archive/release/melodic/octomap/1.9.0-1.tar.gz
-    version: octomap-release-release-melodic-octomap-1.9.0-1
-- tar:
-    local-name: octomap_ros
-    uri: https://github.com/ros-gbp/octomap_ros-release/archive/release/melodic/octomap_ros/0.4.1-1.tar.gz
-    version: octomap_ros-release-release-melodic-octomap_ros-0.4.1-1
-- tar:
-    local-name: octomap_msgs
-    uri: https://github.com/ros-gbp/octomap_msgs-release/archive/release/melodic/octomap_msgs/0.3.5-1.tar.gz
-    version: octomap_msgs-release-release-melodic-octomap_msgs-0.3.5-1
-- tar:
     local-name: rosbridge_suite/rosbridge_suite
     uri: https://github.com/RobotWebTools-release/rosbridge_suite-release/archive/release/melodic/rosbridge_suite/0.11.10-1.tar.gz
     version: rosbridge_suite-release-release-melodic-rosbridge_suite-0.11.10-1
