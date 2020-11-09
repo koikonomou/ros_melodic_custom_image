@@ -34,8 +34,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get install -y \
     apache2 \
     xvfb \
     mysql-server \
-    ros-cmake-modules \
-    ros-melodic-twist-mux
+    ros-cmake-modules
+    # ros-melodic-twist-mux
     # ros-melodic-costmap-2d \
     # ros-melodic-costmap-queue \
     # ros-melodic-octomap-mapping \
@@ -60,6 +60,9 @@ RUN apt-get install -y \
     rosdep init && \
     rosdep update && \
     cd /opt/catkin_ws/src && \
+    git clone https://github.com/locusrobotics/robot_navigation -b melodic && \
+    git clone https://github.com/OctoMap/octomap_mapping -b kinetic-devel && \
+    git clone https://github.com/ros-teleop/twist_mux && \
     git clone https://github.com/roboskel/roboskel_msgs && \
     git clone https://github.com/gstavrinos/mir_robot && \
     git clone https://github.com/gstavrinos/mir_experiments && \

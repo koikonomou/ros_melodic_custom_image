@@ -1,23 +1,23 @@
 version: '3.4'
 services:
     simulation:
-        image: robot_rest_api
+        image: robot_rest
         network_mode: host
         command: bash -c "pkill Xvfb; rm /tmp/.X1-lock; Xvfb :1 -screen scrn 640x480x16 & export DISPLAY=:1 && roslaunch mir_experiments sim_untidy_small_hospital_room.launch gui:=false gui_teleop:=false"
     changes:
-        image: robot_rest_api
+        image: robot_rest
         network_mode: host
         command: bash -c "sleep 20; roslaunch mir_experiments changes_based_on_tidy_small_room_depth_camera.launch"
         depends_on:
             - simulation
     un_pause_simulation:
-        image: robot_rest_api
+        image: robot_rest
         network_mode: host
         command: bash -c "sleep 10; rosservice call /gazebo/unpause_physics \"{}\""
         depends_on:
             - simulation
     dummy_teleop:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c " sleep 15; rostopic pub /cmd_vel geometry_msgs/Twist \"[0.0, 0.0, 0.0]\" \"[0.0, 0.0, 0.2]\""
         depends_on:
@@ -25,7 +25,7 @@ services:
             - changes
             - un_pause_simulation
     rosbridge_server:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 5; roslaunch rosbridge_server rosbridge_websocket.launch"
         depends_on:
@@ -33,7 +33,7 @@ services:
             - changes
             - un_pause_simulation
     tf2_web_republisher:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 5; rosrun tf2_web_republisher tf2_web_republisher"
         depends_on:
@@ -42,7 +42,7 @@ services:
             - un_pause_simulation
             - rosbridge_server
     octomap_mapping:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 5; roslaunch mir_experiments octomap_mapping_depth_camera.launch"
         depends_on:
@@ -52,7 +52,7 @@ services:
             - rosbridge_server
             - tf2_web_republisher
     ros_rvv:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 5; rosrun ros_rvv rvv.py"
         depends_on:
@@ -63,7 +63,7 @@ services:
             - tf2_web_republisher
             - octomap_mapping
     amcl:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 10; roslaunch mir_navigation amcl.launch"
         depends_on:
@@ -74,7 +74,7 @@ services:
             - tf2_web_republisher
             - octomap_mapping
     move_base:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 12; roslaunch mir_navigation start_planner.launch"
         depends_on:
@@ -86,13 +86,13 @@ services:
             - octomap_mapping
             - amcl
     mission_manager:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "python /opt/catkin_ws/src/robot_rest_api/ros/mission_manager.py"
         depends_on:
             - simulation
     apache_server:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: apachectl -D FOREGROUND
         depends_on:
@@ -117,14 +117,14 @@ services:
             - ../rest/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
         network_mode: host
     init_db:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
-        # command: bash -c "sleep 10; mysql --protocol=tcp < /opt/catkin_ws/src/robot_rest_api/rest/mysql/init.sql"
+        # command: bash -c "sleep 10; mysql --protocol=tcp < /opt/catkin_ws/src/robot_rest/rest/mysql/init.sql"
         command: bash -c "sleep 10"
         depends_on:
             - mysqld
     rest_server:
-        image : robot_rest_api
+        image : robot_rest
         network_mode: host
         command: bash -c "sleep 15; . ~/.cargo/env && cd /opt/catkin_ws/src/robot_rest_api/rest/rust/robot-rest-api/ && ROCKET_ADDRESS=\"0.0.0.0\" cargo run"
         depends_on:
