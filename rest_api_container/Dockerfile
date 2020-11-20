@@ -32,15 +32,84 @@ LABEL maintainer="George Stavrinos <gstavrinos@iit.demokritos.gr>"
 
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y \
     apache2 \
+    apache2-bin \
+    apache2-utils \
+    libaio1 \
+    libaprutil1-dbd-sqlite3 \
+    libaprutil1-ldap \
+    libcgi-fast-perl \
+    libhtml-parser-perl \
+    libencode-locale-perl \
+    libevent-core-2.1-6 \
+    libfcgi-perl \
+    libhtml-tagset-perl \
+    libhtml-template-perl \
+    libhttp-date-perl \
+    libcgi-pm-perl \
+    libhttp-message-perl \
+    libio-html-perl \
+    liblua5.2-0 \
+    liblwp-mediatypes-perl \
+    liburi-perl \
+    libxfont2 \
+    libxkbfile1 \ 
+    mysql-client-5.7 \
+    mysql-client-core-5.7 \
+    mysql-server-5.7 \
+    mysql-server-core-5.7 \
+    psmisc \
+    ssl-cert \
+    x11-xkb-utils \
+    xfonts-base \
+    xfonts-encodings \
+    xfonts-utils \
+    xserver-common \
     xvfb \
     mysql-server \
-    ros-cmake-modules 
-    # ros-melodic-rospy-message-converter
+    ros-cmake-modules \
+    python-websocket \
+    python-bson \
+    python-matplotlib \
+    python-tornado \
+    google-mock \
+    blt \
+    fonts-lyx \
+    libjs-jquery-ui \
+    python-backports.functools-lru-cache \
+    python-cycler \
+    python-matplotlib-data \
+    python-subprocess32 \
+    python-tk \
+    python-tz \
+    ttf-bitstream-vera \
+    tk8.6-blt2.5 \
+    python-gnupg \
+    python-pycryptodome \
+    libnotify4 \
+    libwxbase3.0-0v5 \
+    libwxgtk3.0-gtk3-0v5 \
+    python-paramiko \
+    python-wxgtk3.0 \
+    python-wstools \
+    python-wxversion \
+    fonts-liberation \
+    graphviz \
+    libann0 \
+    libcdt5 \
+    libgvc6 \
+    libgvpr2 \
+    liblab-gamut1 \
+    libpathplan4 \
+    python-backports-abc \
+    python-singledispatch \
+    python-pyqt5.qtsvg \
+    python-bson-ext 
+    
+# ros-melodic-rospy-message-converter
 
 RUN mkdir -p /opt/catkin_ws/src/robot_rest_api
 
 COPY --from=middleman robot_rest_api /opt/catkin_ws/src/robot_rest_api
-
 RUN apt-get install -y \
         build-essential \
         git \
@@ -48,6 +117,17 @@ RUN apt-get install -y \
     rosdep init && \
     rosdep update && \
     cd /opt/catkin_ws/src && \
+#    git clone https://github.com/matplotlib/matplotlib && \
+    git clone https://github.com/GT-RAIL/rosauth && \
+#    git clone https://github.com/tornadoweb/tornado && \
+    git clone https://github.com/qt/qtbase && \
+#    git clone https://github.com/orocos/orocos_kinematics_dynamics && \
+    git clone https://github.com/ros-visualization/rqt_robot_steering && \
+#    git clone https://github.com/tu-darmstadt-ros-pkg/hector_slam && \
+    cd ../ && \
+    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; catkin_make"  
+
+RUN cd /opt/catkin_ws/src && \
     git clone https://github.com/uos/rospy_message_converter && \
     git clone https://github.com/ros-perception/perception_pcl -b 1.7.2 && \
     git clone https://github.com/ros-perception/pcl_msgs -b 0.3.0 && \
@@ -84,9 +164,9 @@ RUN apt-get install -y \
     git clone -b master https://github.com/RobotWebTools/tf2_web_republisher && \
     git clone -b melodic-devel https://github.com/ros/geometry2 && \
     cd .. && \
-    rosdep install --from-paths src --ignore-src -r -y && \
-    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; source /opt/ros/melodic/setup.bash; catkin_make --pkg roboskel_msgs" && \
-    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; /opt/ros/melodic/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make" && \
+#    rosdep install --from-paths src --ignore-src -r -y && \
+    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; catkin_make --pkg roboskel_msgs" && \
+    /bin/bash -c "source /opt/ros_ws/melodic/install_isolated/setup.bash; source /opt/catkin_ws/devel/setup.bash; catkin_make" && \
     apt-get purge -y \
         build-essential \
         git && \
@@ -111,7 +191,7 @@ RUN sed --in-place --expression \
 
 RUN sh /opt/catkin_ws/src/robot_rest_api/rest/rust/install_all.sh
 
-RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash&& . /opt/ros/melodic/setup.bash && . /opt/catkin_ws/devel/setup.bash && . ~/.cargo/env && cd /opt/catkin_ws/src/robot_rest_api/rest/rust/robot-rest-api/ && cargo build"
+#RUN /bin/bash -c ". /opt/ros_ws/melodic/install_isolated/setup.bash&& . /opt/catkin_ws/devel/setup.bash && . ~/.cargo/env && cd /opt/catkin_ws/src/robot_rest_api/rest/rust/robot-rest-api/ && cargo build"
 
 EXPOSE 80
 # EXPOSE 3306
